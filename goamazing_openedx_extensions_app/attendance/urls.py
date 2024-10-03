@@ -1,6 +1,7 @@
-from django.urls import path, include
-from goamazing_openedx_extensions_app.attendance.views import AttendanceView
+from django.urls import path
+from .views import attendance_get, attendance_post
 
 urlpatterns = [
-    path(r'', AttendanceView.as_view(), name='attendance'),
+    path('', attendance_get, name='attendance_get'),  # for GET requests
+    path('', attendance_post, name='attendance_post'),  # for POST requests
 ]
