@@ -157,4 +157,12 @@ setup(
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.8',
     ],
+        entry_points={
+        "lms.djangoapp": [
+            "goamazing_openedx_extensions_app = goamazing_openedx_extensions_app.apps:GoamazingOpenedxExtensionsAppConfig",
+        ],
+        "cms.djangoapp": [
+            "goamazing_openedx_extensions_app = goamazing_openedx_extensions_app.apps:GoamazingOpenedxExtensionsAppConfig",
+        ],
+    }
 )

@@ -11,3 +11,13 @@ class GoamazingOpenedxExtensionsAppConfig(AppConfig):
     """
 
     name = 'goamazing_openedx_extensions_app'
+
+    plugin_app = {
+        'url_config': {
+            'lms.djangoapp': {
+                'namespace': 'goamazing_openedx_extensions_app',
+                'regex': '^api/goamazing_openedx_extensions_app/',
+                'relative_path': 'api.urls',
+            }
+        },
+    }
