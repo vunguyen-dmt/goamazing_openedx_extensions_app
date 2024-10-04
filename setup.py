@@ -157,7 +157,7 @@ setup(
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.8',
     ],
-        entry_points={
+    entry_points={
         "lms.djangoapp": [
             "goamazing_openedx_extensions_app = goamazing_openedx_extensions_app.apps:GoamazingOpenedxExtensionsAppConfig",
         ],
