@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import ensure_csrf_cookie
 from opaque_keys.edx.keys import CourseKey
 from common.djangoapps.student.models import CourseEnrollment
-from common.insights_db import InsightsDatabase
+from goamazing_openedx_extensions_app.common.insights_db import InsightsDatabase
 
 @login_required
 @ensure_csrf_cookie
