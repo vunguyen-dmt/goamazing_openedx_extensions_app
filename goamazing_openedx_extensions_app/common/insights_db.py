@@ -26,9 +26,8 @@ class InsightsDatabase:
                 f'UID={username};'
                 f'PWD={password}'
             )
-        except pyodbc.Error as ex:
+        except Exception as ex:
             log.info("error connecting insights db: " + str(ex))
-            sqlstate = ex.args[1]
 
     def execute_query(self, query):
         """Execute a SELECT query and return the results."""
@@ -40,9 +39,8 @@ class InsightsDatabase:
             cursor.execute(query)
             results = cursor.fetchall()
             return results
-        except pyodbc.Error as ex:
+        except Exception as ex:
             log.info("error executing query on insights db: " + str(ex))
-            sqlstate = ex.args[1]
             return None
         finally:
             cursor.close()
