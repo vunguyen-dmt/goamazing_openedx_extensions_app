@@ -4,7 +4,7 @@ import logging
 
 log = logging.getLogger('InsightsDatabase')
 
-connection_data = str.split(os.environ.get('INSIGHTS_DATABASE_CONNECTION', ''), ',') # server;dbname;user;password;driver
+connection_data = str.split(os.environ.get('INSIGHTS_DATABASE_CONNECTION', ''), ';') # server;dbname;user;password;driver
 
 server = connection_data[0]
 database = connection_data[1]
