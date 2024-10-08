@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timezone
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import ensure_csrf_cookie
@@ -59,14 +59,14 @@ def attendance_post(request, *args, **kwargs):
         if not qr_config_id:
             return JsonResponse({'error': 'Invalid QR'}, status=400)
 
-        utc_now = datetime.now(datetime.timezone.utc)
+        utc_now =  datetime.now(timezone.utc)
 
         db = InsightsDatabase()
         db.connect()
 
         qr_config = db.execute_query(f"""
             SELECT * FROM AttendanceQRConfig
-            WHERE Id = ? AND CourseId = ? AND DueTime <= ?
+            WHERE Id = ? AND CourseId = ? AND DueTime > ?
         """, (qr_config_id, qr_config_id, utc_now), True)
 
         if not qr_config:
