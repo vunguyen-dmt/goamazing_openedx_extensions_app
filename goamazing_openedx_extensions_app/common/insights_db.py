@@ -27,20 +27,20 @@ class InsightsDatabase:
                 f'PWD={password}'
             )
         except Exception as ex:
-            log.info("error connecting insights db: " + str(ex))
+            log.error("error connecting insights db: " + str(ex))
 
-    def execute_query(self, query):
+    def execute_query(self, query, params, fetchOne):
         """Execute a SELECT query and return the results."""
         if not self.connection:
             return None
 
         cursor = self.connection.cursor()
         try:
-            cursor.execute(query)
-            results = cursor.fetchall()
+            cursor.execute(query, params)
+            results = cursor.fetchOne() if fetchOne else cursor.fetchall()
             return results
         except Exception as ex:
-            log.info("error executing query on insights db: " + str(ex))
+            log.error("error executing query on insights db: " + str(ex))
             return None
         finally:
             cursor.close()
