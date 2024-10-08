@@ -1,5 +1,5 @@
 from datetime import datetime
-from django.http import JsonResponse, Http
+from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import ensure_csrf_cookie
 from opaque_keys.edx.keys import CourseKey
