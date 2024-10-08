@@ -1,5 +1,5 @@
 from django.urls import path, re_path
-from .views import attendance_get, attendance_post
+from .views import attendance_post
 from django.conf import settings
 
 urlpatterns = [
