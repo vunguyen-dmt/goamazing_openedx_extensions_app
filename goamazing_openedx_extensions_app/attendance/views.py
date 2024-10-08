@@ -83,8 +83,8 @@ def attendance_post(request, *args, **kwargs):
             db.connection.commit()
         except Exception as e:
             log.error("insert attendance qr error: " + str(e))
-            return JsonResponse(status=500)
+            return JsonResponse({},status=500)
 
         db.close()
-        return JsonResponse(status=200)
+        return JsonResponse({},status=200)
     return JsonResponse({'error': 'Invalid request method'}, status=400)
