@@ -29,7 +29,7 @@ class InsightsDatabase:
         except Exception as ex:
             log.error("error connecting insights db: " + str(ex))
 
-    def execute_query(self, query, params, fetchOne):
+    def execute_query(self, query, params, fetchone):
         """Execute a SELECT query and return the results."""
         if not self.connection:
             return None
@@ -37,7 +37,7 @@ class InsightsDatabase:
         cursor = self.connection.cursor()
         try:
             cursor.execute(query, params)
-            results = cursor.fetchOne() if fetchOne else cursor.fetchall()
+            results = cursor.fetchone() if fetchone else cursor.fetchall()
             return results
         except Exception as ex:
             log.error("error executing query on insights db: " + str(ex))

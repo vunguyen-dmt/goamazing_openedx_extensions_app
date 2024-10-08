@@ -67,7 +67,7 @@ def attendance_post(request, *args, **kwargs):
         qr_config = db.execute_query(f"""
             SELECT * FROM AttendanceQRConfig
             WHERE Id = ? AND CourseId = ? AND DueTime > ?
-        """, (qr_config_id, qr_config_id, utc_now), True)
+        """, (qr_config_id, course_key_string, utc_now), True)
 
         if not qr_config:
             return JsonResponse({'error': 'The QR does not exist or expired.'}, status=400)
