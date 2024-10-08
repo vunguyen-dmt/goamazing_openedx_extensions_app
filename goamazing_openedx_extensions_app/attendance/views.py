@@ -52,8 +52,8 @@ def attendance_post(request, *args, **kwargs):
             return JsonResponse({'error': 'you\'ve not enrolled.'}, status=400)
 
         request_body = json.loads(request.body.decode('utf8'))
-        longitude = request_body["longitude"] if "longitude" in request_body else ""
-        latitude = request_body["latitude"] if "latitude" in request_body else ""
+        longitude = request_body["longitude"] if "longitude" in request_body and request_body["longitude"] != '' else None
+        latitude = request_body["latitude"] if "latitude" in request_body and request_body["latitude"] != '' else None
 
         qr_config_id = kwargs.get('qr_config_id')
         if not qr_config_id:
@@ -70,18 +70,21 @@ def attendance_post(request, *args, **kwargs):
         """, (qr_config_id, course_key_string, utc_now), True)
 
         if not qr_config:
+            db.close()
             return JsonResponse({'error': 'The QR does not exist or expired.'}, status=400)
 
         if qr_config.LocationRequirement == 'yes' and (not longitude or not latitude):
+            db.close()
             return JsonResponse({'error': 'Your location is required.'}, status=400)
 
         try:
             db.execute_query(f"""
-                INSERT INTO AttendanceQR (StudentId, AttendanceQRConfigId, CreatedTime, Longitude, Latitude, Status)
-                VALUES (?, ?, ?, ?, ?, 'open')
+                INSERT INTO AttendanceQRCheck (LearnerId, AttendanceQRConfigId, CreatedTime, Longitude, Latitude, Status)
+                VALUES (?, ?, ?, ?, ?, 'opening')
             """, (request.user.id, qr_config_id, utc_now, longitude, latitude), True)
             db.connection.commit()
         except Exception as e:
+            db.close()
             log.error("insert attendance qr error: " + str(e))
             return JsonResponse({},status=500)
 
