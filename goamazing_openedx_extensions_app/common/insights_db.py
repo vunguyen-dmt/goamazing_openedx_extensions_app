@@ -29,15 +29,16 @@ class InsightsDatabase:
         except Exception as ex:
             raise ex
 
-    def execute_query(self, query, params, fetchone):
+    def execute_query(self, query, params, fetch):
         """Execute a SELECT query and return the results."""
         if not self.connection:
-            raise "no connection"
-
+            return None
         cursor = self.connection.cursor()
         try:
             cursor.execute(query, params)
-            results = cursor.fetchone() if fetchone else cursor.fetchall()
+            if not fetch:
+              return
+            results = cursor.fetchone() if fetch == 'one' else cursor.fetchall()
             return results
         except Exception as ex:
             raise ex

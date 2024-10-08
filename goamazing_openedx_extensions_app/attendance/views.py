@@ -67,7 +67,7 @@ def attendance_post(request, *args, **kwargs):
         qr_config = db.execute_query(f"""
             SELECT * FROM AttendanceQRConfig
             WHERE Id = ? AND CourseId = ? AND DueTime > ?
-        """, (qr_config_id, course_key_string, utc_now), True)
+        """, (qr_config_id, course_key_string, utc_now), 'one')
 
         if not qr_config:
             db.close()
@@ -81,7 +81,7 @@ def attendance_post(request, *args, **kwargs):
             db.execute_query(f"""
                 INSERT INTO AttendanceQRCheck (LearnerId, AttendanceQRConfigId, CreatedTime, Longitude, Latitude, Status)
                 VALUES (?, ?, ?, ?, ?, 'opening')
-            """, (request.user.id, qr_config_id, utc_now, longitude, latitude), True)
+            """, (request.user.id, qr_config_id, utc_now, longitude, latitude), False)
             db.connection.commit()
         except Exception as e:
             db.close()
